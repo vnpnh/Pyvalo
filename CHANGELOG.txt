@@ -1,0 +1,14 @@
+Change Log
+==========
+
+0.0.1 (23/03/2022)
+------------------
+- First Release
+- Buying Phase Validation
+- Purchase Weapon and Shield
+- Score Info
+- Time Left Info
+- Money Checker In-Game
+- Drop Weapon
+- Communication Chat
+- Configuration
