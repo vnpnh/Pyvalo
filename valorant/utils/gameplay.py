@@ -6,6 +6,7 @@ from valorant.config import GameplayConfig
 _config = GameplayConfig()
 image = Image()
 
+
 @auto_screenshot("buy_phase.png", _config.buy_phase_coor)
 def check_buy_phase(img=None):
     """

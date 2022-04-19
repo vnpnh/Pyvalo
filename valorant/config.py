@@ -1,9 +1,14 @@
 import configparser
 
+
 class Config(object):
-    def __init__(self, filename=__file__[:-9] + 'config.ini'):
+    def __init__(self, filename=__file__ + 'config.ini'):
         self._config = configparser.ConfigParser()  # set it to conf
         self._config.read(filename)
+
+    def __str__(self):
+        return f"Section: {self._config.sections()}\n" \
+               f"Items: {[self._config.items(section_name) for section_name in self._config.sections()]}"
 
     def get_item(self, property_name, item):
         if property_name not in self._config.sections():  # we don't want KeyError
@@ -11,6 +16,13 @@ class Config(object):
         if property_name == "COORDINATE":
             return eval(self._config[property_name].get(item))
         return self._config[property_name].get(item)
+
+    def update_item(self, file_path, section, key, value):
+        self._config.read(file_path)
+        self._config.set(section, key, value)
+        cfgfile = open(file_path, 'w')
+        self._config.write(cfgfile, space_around_delimiters=False)  # use flag in case case you need to avoid white space.
+        cfgfile.close()
 
     def create_config(self, filename='config.ini'):
         self._config['PATH'] = {
@@ -22,6 +34,15 @@ class Config(object):
             'ENEMY_SCORE_INFO': (750, 25, 100, 55),
             'OWN_SCORE_INFO': (1050, 25, 100, 55),
             'TIME_LEFT_POS': (900, 25, 100, 55),
+        }
+        self._config['PYAUTOGUI'] = {
+            'FAILSAFE': 'TRUE',
+        }
+
+        self._config['ABILITYKEYBIND'] = {
+            'FIRST_ABILITY': 'e',
+            'SECOND_ABILITY': 'z',
+            'THIRD_ABILITY': 'c',
         }
 
         with open(filename, 'w') as configfile:

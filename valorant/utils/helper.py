@@ -1,7 +1,8 @@
 import pyautogui
 from valorant.utils.record import screenshot
 from os import getcwd
-
+from keyboard import record, wait
+from valorant.utils.agent import Abilities
 
 def buy_tab():
     pyautogui.press('b')
@@ -49,3 +50,17 @@ def auto_chat_tab(func):
         return value
 
     return inner
+
+
+def shortcut(key: str, msg=None):
+    def wrap(func):
+        def inner(*args, **kwargs):
+            # starting press buy button
+            wait(key)
+            if msg is not None:
+                print(f"Message: {msg}")
+            func(*args, **kwargs)
+
+        return inner
+
+    return wrap

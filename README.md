@@ -25,6 +25,8 @@ https://github.com/UB-Mannheim/tesseract/wiki
 - Drop Weapon
 - Communication Chat
 - Configuration
+- Shortcut and Keybind
+- Agents ability
 
 
 
@@ -57,6 +59,42 @@ print(shop['vandal'])
 #add new weapon
 shop['new weapon']=[3100, (904, 670)]
 print(shop['new weapon'])
+```
+
+## Agent Abilities and Keybind
+Create agent combo shortcut using custom or default keybind and automatically return all information
+```python
+from valorant.utils.agent import Agent
+
+if __name__ == '__main__':
+    agent = Agent(first_ability_keybind="m")
+    print(agent) #Agent(first_ability_keybind='m', second_ability_keybind='e', third_ability_keybind='c', ultimate_keybind='x', get_keybind='f', first_ability=0, second_ability=0, third_ability=0, ultimate_ability=1)
+    agent.use_first_ability()
+    agent.use_second_ability()
+    agent.use_ultimate_ability()
+```
+
+
+## Chamber Combo
+Create agent combo shortcut using custom or default keybind and automatically return all information
+```python
+from valorant.utils.helper import shortcut
+from valorant.utils.agent import Chamber
+
+if __name__ == '__main__':
+    #chamber = Chamber()  # default keybind
+    chamber = Chamber(first_ability_keybind="e", get_keybind="f") #custom keybind
+
+    @shortcut("capslock", "Capslock Detected")
+    def chambers_fake_tp():
+        chamber.fake_tp()
+        print(chamber)
+        #Chamber(first_ability_keybind='e', second_ability_keybind='e', third_ability_keybind='c', ultimate_keybind='x', get_keybind='f', first_ability=0, second_ability=0, third_ability=0, ultimate_ability=1, fake_tp_keybind='ef')
+
+    chambers_fake_tp()
+
+    # access information of chamber first ability
+    print(chamber.first_ability)
 ```
 
 ## Complete
