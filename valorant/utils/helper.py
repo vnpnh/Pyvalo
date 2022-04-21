@@ -4,6 +4,7 @@ from os import getcwd
 from keyboard import record, wait
 from valorant.utils.agent import Abilities
 
+
 def buy_tab():
     pyautogui.press('b')
 
@@ -27,6 +28,7 @@ def auto_buy_tab(func):
 def auto_screenshot(name, crop):
     def wrap(func):
         def inner(*args, **kwargs):
+            print(crop)
             if 'img' not in kwargs:
                 path = getcwd() + "\\" + name
                 img = screenshot(path, crop)
@@ -36,6 +38,46 @@ def auto_screenshot(name, crop):
 
         return inner
 
+    return wrap
+
+
+def check_position(name, base):
+    try:
+        if name == "buy_phase":
+            return base.buy_phase_coor
+        elif name == "check_enemy_score":
+            return base.enemy_info_coor
+        elif name == "check_own_score":
+            return base.enemy_info_coor
+        elif name == "check_enemy_score":
+            return base.enemy_info_coor
+        elif name == "time_left":
+            return base.time_left_coor
+        elif name == "check_money":
+            return base.check_money_pos
+        elif name == "tesseract":
+            return base.tesseract_path
+    except ValueError:
+        pass
+
+
+def scanning(name):
+    def wrap(func):
+        def scanner(*args, **kwargs):
+            if isinstance(kwargs['config'], object) and kwargs['config'].__module__ == "valorant.base":
+                path = getcwd() + "\\" + name + '.png'
+                if 'config' in kwargs and func.__defaults__[0] is None:
+                    img = screenshot(path, check_position(name, kwargs['config']))
+                    kwargs['img'] = img
+                else:
+                    img = screenshot(path, check_position(name, args[0]))
+                    kwargs['img'] = img
+
+                return func(*args, **kwargs)
+            else:
+                raise Exception("Parameter must be config and the arguments need from valorant base class config")
+
+        return scanner
     return wrap
 
 
@@ -59,6 +101,18 @@ def shortcut(key: str, msg=None):
             wait(key)
             if msg is not None:
                 print(f"Message: {msg}")
+            func(*args, **kwargs)
+
+        return inner
+
+    return wrap
+
+
+def apply_config(base):
+    def wrap(func):
+        def inner(*args, **kwargs):
+            # starting press buy button
+            kwargs = {'base': base}
             func(*args, **kwargs)
 
         return inner

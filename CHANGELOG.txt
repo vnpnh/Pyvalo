@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+0.2.1 (21/04/2022)
+- Added Support Custom Config
+- Optimization and Refactor Code
+
 0.2 (19/04/2022)
 - Added keybindings
 - Added Agents Abilities and Information

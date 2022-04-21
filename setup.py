@@ -10,9 +10,9 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name='pyvalo',
-    version='0.1',
+    version='0.2.1',
     packages=['valorant', 'valorant.utils'],
-    url='https://github.com/vnpnh',
+    url='https://github.com/vnpnh/Pyvalo',
     license='MIT',
     author='vnpnh',
     author_email='no@email.com',

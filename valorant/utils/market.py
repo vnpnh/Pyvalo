@@ -1,21 +1,15 @@
-import os
-
 import pyautogui
 import re
 from valorant.utils.preprocessing import Image
-from valorant.utils.helper import auto_buy_tab, auto_screenshot
-from valorant.config import MarketConfig
+from valorant.utils.helper import auto_buy_tab, scanning
 
-pyautogui.FAILSAFE = True
-_config = MarketConfig()
+# pyautogui.FAILSAFE = True
 
 
 class Shop:
-    def __init__(self, config=_config):
-        global _config
+    def __init__(self):
         self.image = Image()
         self.current_money = 800
-        _config = config
         self.img = None
         self._weapons = {
             'eco': [0, (0, 0)],
@@ -59,8 +53,8 @@ class Shop:
         self._weapons = primary
 
     @auto_buy_tab
-    @auto_screenshot("check_money.png", _config.money_coor)
-    def check_money(self, img=None):
+    @scanning("check_money")
+    def check_money(self, img=None, **kwargs):
         """
         for checking your current money and next money
         use it when buy phase
@@ -68,7 +62,7 @@ class Shop:
         :param show: boolean (optional)
         :return: tuple (current money, next money)
         """
-        text = self.image.ocr(img)
+        text = self.image.ocr(img, config=kwargs)
         if text is None or len(text) == 0:
             return 0
         split_text = text.split('\n')

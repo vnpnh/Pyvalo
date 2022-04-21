@@ -1,15 +1,18 @@
 from valorant import market
 from valorant.utils.gameplay import check_buy_phase
+import valorant
 import time
+
+custom_config = valorant.config(tesseract=r'D:\Program Files\Tesseract-OCR\tesseract.exe')  # custom config
 shop = market.Shop()
 print("Start Bot")
 
 while True:
     print("Checking buy phase")
-    data = check_buy_phase()
+    data = check_buy_phase(config=custom_config)
     print(data)
     if data:
-        current_money = shop.check_money()
+        current_money = shop.check_money(config=custom_config)
         print("Current Money: ", str(current_money))
         # this is my buying strategy that mostly I use repeatedly
         primary = "vandal"

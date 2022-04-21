@@ -31,8 +31,13 @@ class Image:
             cv2.waitKey(0)
         return crop_img
 
-    def ocr(self, img, digit_only=False):
-        pytesseract.pytesseract.tesseract_cmd = self.config.tesseract_path
+    def ocr(self, img, digit_only=False, config=None):
+
+        tesseract_config = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+        if 'config' in config:
+            tesseract_config = config['config'].tesseract
+        print(tesseract_config)
+        pytesseract.pytesseract.tesseract_cmd = tesseract_config
         if digit_only:
             text = pytesseract.image_to_string(img, lang='eng',
                                                config='--psm 10 --oem 3 -c tessedit_char_whitelist=0123456789')
