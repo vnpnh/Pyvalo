@@ -1,7 +1,7 @@
 from valorant.utils.gameplay import check_buy_phase
-import valorant
-import time
+import time, valorant
 
-default_config = valorant.config()  # default config
+custom_config = valorant.config(tesseract=r'D:\Program Files\Tesseract-OCR\tesseract.exe')
+
 time.sleep(1)
-print(check_buy_phase(config=default_config))
+print(check_buy_phase(config=custom_config))

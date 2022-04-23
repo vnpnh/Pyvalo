@@ -1,8 +1,26 @@
 import pyautogui
 from valorant.utils.record import screenshot
 from os import getcwd
-from keyboard import record, wait
-from valorant.utils.agent import Abilities
+from keyboard import wait
+import warnings
+import functools
+
+
+def deprecated(func):
+    """This is a decorator which can be used to mark functions
+    as deprecated. It will result in a warning being emitted
+    when the function is used."""
+
+    @functools.wraps(func)
+    def new_func(*args, **kwargs):
+        warnings.simplefilter('always', DeprecationWarning)  # turn off filter
+        warnings.warn("Call to deprecated function {}.".format(func.__name__),
+                      category=DeprecationWarning,
+                      stacklevel=2)
+        warnings.simplefilter('default', DeprecationWarning)  # reset filter
+        return func(*args, **kwargs)
+
+    return new_func
 
 
 def buy_tab():
@@ -28,7 +46,6 @@ def auto_buy_tab(func):
 def auto_screenshot(name, crop):
     def wrap(func):
         def inner(*args, **kwargs):
-            print(crop)
             if 'img' not in kwargs:
                 path = getcwd() + "\\" + name
                 img = screenshot(path, crop)
@@ -48,9 +65,7 @@ def check_position(name, base):
         elif name == "check_enemy_score":
             return base.enemy_info_coor
         elif name == "check_own_score":
-            return base.enemy_info_coor
-        elif name == "check_enemy_score":
-            return base.enemy_info_coor
+            return base.own_info_coor
         elif name == "time_left":
             return base.time_left_coor
         elif name == "check_money":
@@ -78,6 +93,7 @@ def scanning(name):
                 raise Exception("Parameter must be config and the arguments need from valorant base class config")
 
         return scanner
+
     return wrap
 
 

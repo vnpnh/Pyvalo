@@ -11,6 +11,29 @@ class Image:
         self.config = GlobalConfig()
 
     @staticmethod
+    def masking_color(img, lower, upper, erode=0, dilate=0, show=False):
+        """
+        making color image
+        :param img: imported image from img cv2
+        :param lower: set example: (0,0,0)
+        :param upper: set example: (179, 225, 255)
+        :param erode: int example: 3
+        :param dilate: int example: 4
+        :param show: bool  example: False
+        :return: cv2 masked image
+        """
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        lower_color = np.array(lower, np.uint8)
+        upper_color = np.array(upper, np.uint8)
+        frame_threshold = cv2.inRange(hsv, lower_color, upper_color)
+        frame_threshold = cv2.erode(frame_threshold, np.ones((erode, erode), dtype=np.uint8))
+        frame_threshold = cv2.dilate(frame_threshold, np.ones((dilate, dilate), dtype=np.uint8))
+        frame_threshold = cv2.cvtColor(frame_threshold, cv2.COLOR_GRAY2RGB)
+        if show:
+            cv2.imshow('Color Detection', frame_threshold)
+        return frame_threshold
+
+    @staticmethod
     def detect_white(img, sensitivity=3):
         lower_white = np.array([0, 0, 255 - sensitivity])
         upper_white = np.array([255, sensitivity, 255])
@@ -32,11 +55,9 @@ class Image:
         return crop_img
 
     def ocr(self, img, digit_only=False, config=None):
-
         tesseract_config = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
         if 'config' in config:
             tesseract_config = config['config'].tesseract
-        print(tesseract_config)
         pytesseract.pytesseract.tesseract_cmd = tesseract_config
         if digit_only:
             text = pytesseract.image_to_string(img, lang='eng',

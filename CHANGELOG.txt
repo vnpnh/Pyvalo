@@ -1,11 +1,22 @@
-Change Log
-==========
+====================================================
+Pyvalo/Python 0.2.1 - Release Notes & Changes
+====================================================
+
+0.2.2 (23/04/2022)
+------------------
+- Fixed Init file
+- Optimization and fix bug time left not getting the value when below 15 seconds and others
+- Fixed wrong coordination on enemy and own score info cause of accidentally exchanged and not getting the value
+- Deprecated process_score function and changed to masking_color functions
+
 
 0.2.1 (21/04/2022)
+------------------
 - Added Support Custom Config
 - Optimization and Refactor Code
 
 0.2 (19/04/2022)
+------------------
 - Added keybindings
 - Added Agents Abilities and Information
 - Added Agent Chamber Combo

@@ -1,8 +1,7 @@
 from valorant.utils.gameplay import time_left
-import valorant
+from valorant import config
 import time
 
-custom_config = valorant.config(tesseract=r'D:\Program Files\Tesseract-OCR\tesseract.exe')  # custom config
-
 time.sleep(1)
+custom_config = config(tesseract=r'D:\Program Files\Tesseract-OCR\tesseract.exe')  # custom config
 print(time_left(config=custom_config))

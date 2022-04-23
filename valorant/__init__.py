@@ -1,23 +1,7 @@
-# from .utils import market
-# from .utils import preprocessing
-# from .utils import gameplay
-# from .utils.preprocessing import *
-# from .utils.gameplay import *
-# from .utils import *
-#
-#
-# from .utils import market
-# from .utils import preprocessing
-# from .utils import gameplay
-# from .utils.preprocessing import *
-# from .utils.gameplay import *
+from .utils import agent, communication, gameplay, helper, keybind, market, preprocessing, record
 from .base import ValorantBase
-from .utils import *
-from .config import *
 from . import version
 import pyautogui
-
-pyautogui.FAILSAFE = True
 
 
 def config(**kwargs):
@@ -46,8 +30,8 @@ def config(**kwargs):
         _tesseract = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
         _check_money_pos = (250, 120, 110, 55)
         _check_buy_phase = (810, 140, 310, 140)
-        _enemy_score_info = (750, 25, 100, 55)
-        _own_score_info = (1050, 25, 100, 55)
+        _own_score_info = (750, 25, 100, 55)
+        _enemy_score_info = (1050, 25, 100, 55)
         _time_left_pos = (900, 25, 100, 55)
         _failsafe = True
 
@@ -80,7 +64,12 @@ __version_info__ = version.VERSION
 __version__ = version.VERSION_TEXT
 
 __all__ = [
-    "preprocessing",
-    "market",
+    'agent',
+    'communication',
     "gameplay",
+    'helper',
+    "keybind",
+    "market",
+    "preprocessing",
+    "record",
 ]
